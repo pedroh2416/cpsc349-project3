@@ -1,68 +1,97 @@
 import * as mockroblog from './mockroblog.js'
 window.mockroblog = mockroblog
 
-//login button
-if(document.getElementById("login") != null) {
-    let loginBtn = document.getElementById("login")
-    loginBtn.addEventListener("click", function() {
-
-        console.log(document.getElementById("loginUsername").value)
-        if(!document.getElementById("loginUsername").value || !document.getElementById("loginPassword").value) {
-            alert("Failed Login. Make sure to fill out all fields")
-            return
-        }
-
-        if (mockroblog.authenticateUser(document.getElementById("loginUsername").value, document.getElementById("loginPassword").value) != null) {
-            window.location.href = window.location.href + "yourtimeline.html"
-        } else {
-            //display unsuccesful message
-            alert("Failed Login")
-        }
-    })
+// login get and set functions to save session user
+//setter
+const setUser = function () {
+  sessionStorage.setItem('saveUser', JSON.stringify(document.getElementById('loginUsername').value))
+}
+//getter
+const getUser = function () {
+  const saved = sessionStorage.getItem('saveUser')
+  if (saved) {
+    return JSON.parse(saved)
+  }
+  return {}
 }
 
-if(document.getElementById("register") != null) {
-    let registerBtn = document.getElementById("register")
-    registerBtn.addEventListener("click", function() {
+// login button
+if (document.getElementById('login') != null) {
+  const loginBtn = document.getElementById('login')
+  loginBtn.addEventListener('click', function () {
+    console.log(document.getElementById('loginUsername').value)
+    if (!document.getElementById('loginUsername').value || !document.getElementById('loginPassword').value) {
+      alert('Failed Login. Make sure to fill out all fields')
+      return
+    }
 
-        if(!document.getElementById("registerUsername").value || !document.getElementById("registerEmail").value || !document.getElementById("registerPassword").value) {
-            alert("Failed Register. Make sure to fill out all fields")
-            return
-        }
-
-        if (mockroblog.createUser(document.getElementById("registerUsername").value, document.getElementById("registerEmail").value, document.getElementById("registerPassword").value) != null) {
-            window.location = window.location.toString().replace("register.html", "yourtimeline.html")
-        } else {
-            //display unsuccesful message
-            alert("Failed Register")
-        }
-    })
+    if (mockroblog.authenticateUser(document.getElementById('loginUsername').value, document.getElementById('loginPassword').value) != null) {
+      // save user logged in
+      setUser()
+      window.location.href = window.location.href + 'hometimeline.html'
+    } else {
+      // display unsuccesful message
+      alert('Failed Login')
+    }
+  })
 }
+// register site
+if (document.getElementById('register') != null) {
+  const registerBtn = document.getElementById('register')
+  registerBtn.addEventListener('click', function () {
+    if (!document.getElementById('registerUsername').value || !document.getElementById('registerEmail').value || !document.getElementById('registerPassword').value) {
+      alert('Failed Register. Make sure to fill out all fields')
+      return
+    }
 
+    if (mockroblog.createUser(document.getElementById('registerUsername').value, document.getElementById('registerEmail').value, document.getElementById('registerPassword').value) != null) {
+      window.location = window.location.toString().replace('register.html', 'hometimeline.html')
+    } else {
+      // display unsuccesful message
+      alert('Failed Register')
+    }
+  })
+}
 
 // user timeline
-if(document.querySelector('#yourTimeline-json') != null) {
-    const timeline = mockroblog.getUserTimeline('ProfAvery')
+if (document.querySelector('#yourTimeline-json') != null) {
+  const timeline = mockroblog.getUserTimeline(getUser())
 
-    const display = document.querySelector('#yourTimeline-json')
+  const display = document.querySelector('#yourTimeline-json')
 
-    display.textContent = JSON.stringify(timeline, null, 2)
+  display.textContent = JSON.stringify(timeline, null, 2)
 }
 
-//home timeline
-if(document.querySelector('#homeTimeline-json') != null) {
-    const timeline = mockroblog.getHomeTimeline('ProfAvery')
+// home timeline
+if (document.querySelector('#homeTimeline-json') != null) {
+  const timeline = mockroblog.getHomeTimeline(getUser())
 
-    const display = document.querySelector('#homeTimeline-json')
+  const display = document.querySelector('#homeTimeline-json')
 
-    display.textContent = JSON.stringify(timeline, null, 2)
+  display.textContent = JSON.stringify(timeline, null, 2)
 }
+/*
+timeline.forEach(timelinePost => {
+  display.innerHTML += (
+    <div class=''>
+      <div class=''>
+        ${timelinePost.id}
+      </div>
+      <div class=''>
+        ${timelinePost.text}
+      </div>
+      <div class=''>
+        ${timelinePost.timestamp}
+      </div>
+    </div>
+  )
+})
+*/
+// public timeline
+if (document.querySelector('#publicTimeline-json') != null) {
+  const timeline = mockroblog.getPublicTimeline()
 
-//public timeline
-if(document.querySelector('#publicTimeline-json') != null) {
-    const timeline = mockroblog.getPublicTimeline()
+  const display = document.querySelector('#publicTimeline-json')
 
-    const display = document.querySelector('#publicTimeline-json')
-
-    display.textContent = JSON.stringify(timeline, null, 2)
+  display.textContent = JSON.stringify(timeline, null, 2)
 }
