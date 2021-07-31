@@ -59,7 +59,21 @@ if (document.querySelector('#yourTimeline-json') != null) {
 
   const display = document.querySelector('#yourTimeline-json')
 
-  display.textContent = JSON.stringify(timeline, null, 2)
+  timeline.forEach(timelinePost => {
+    display.innerHTML += (
+      `<link rel="stylesheet" href="styles/tailwind.css">
+      <div class="flex flex-wrap text-center">
+            <div class="p-4 w-full">
+              <div class="bg-blue-200 border-2 border-gray-200 px-2 py-2 rounded-lg">
+                <p class="title-font font-medium text-2xl text-gray-900">${timelinePost.id}</p>
+                <p class="text-justify m-2 w-64 title-font font-small text-gray-900">${timelinePost.text}</p>
+                <p class="title-font font-medium text-gray-900">${timelinePost.timestamp}</p>
+              </div>
+            </div>
+          </div>
+        `
+    )
+  })
 }
 
 // home timeline
@@ -68,30 +82,42 @@ if (document.querySelector('#homeTimeline-json') != null) {
 
   const display = document.querySelector('#homeTimeline-json')
 
-  display.textContent = JSON.stringify(timeline, null, 2)
+  timeline.forEach(timelinePost => {
+    display.innerHTML += (
+      `<link rel="stylesheet" href="styles/tailwind.css">
+        <div class="flex flex-wrap text-center">
+              <div class="p-4 w-full">
+                <div class="bg-blue-200 border-2 border-gray-200 px-2 py-2 rounded-lg">
+                  <p class="title-font font-medium text-2xl text-gray-900">${timelinePost.id}</p>
+                  <p class="text-justify m-2 w-64 title-font font-small text-gray-900">${timelinePost.text}</p>
+                  <p class="title-font font-medium text-gray-900">${timelinePost.timestamp}</p>
+                </div>
+              </div>
+            </div>
+        `
+    )
+  })
 }
-/*
-timeline.forEach(timelinePost => {
-  display.innerHTML += (
-    <div class=''>
-      <div class=''>
-        ${timelinePost.id}
-      </div>
-      <div class=''>
-        ${timelinePost.text}
-      </div>
-      <div class=''>
-        ${timelinePost.timestamp}
-      </div>
-    </div>
-  )
-})
-*/
+
 // public timeline
 if (document.querySelector('#publicTimeline-json') != null) {
   const timeline = mockroblog.getPublicTimeline()
 
   const display = document.querySelector('#publicTimeline-json')
 
-  display.textContent = JSON.stringify(timeline, null, 2)
+  timeline.forEach(timelinePost => {
+    display.innerHTML += (
+      `<link rel="stylesheet" href="styles/tailwind.css">
+        <div class="flex flex-wrap text-center">
+              <div class="p-4 w-full">
+                <div class="bg-blue-200 border-2 border-gray-200 px-2 py-2 rounded-lg">
+                  <p class="title-font font-medium text-2xl text-gray-900">${timelinePost.id}</p>
+                  <p class="text-justify m-2 w-64 title-font font-small text-gray-900">${timelinePost.text}</p>
+                  <p class="title-font font-medium text-gray-900">${timelinePost.timestamp}</p>
+                </div>
+              </div>
+            </div>
+        `
+    )
+  })
 }
