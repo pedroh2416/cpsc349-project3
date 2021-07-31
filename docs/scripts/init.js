@@ -4,10 +4,6 @@ import * as mockroblog from './mockroblog.js'
 // const { theme } = resolveConfig(tailwindConfig)
 window.mockroblog = mockroblog
 
-const timeline = mockroblog.getPublicTimeline()
-
-const display = document.querySelector('#timeline-json')
-display.textContent = JSON.stringify(timeline, null, 2)
 // login get and set functions to save session user
 // setter
 const setUser = function () {
@@ -53,7 +49,7 @@ cancelBtn.addEventListener('click', () => {
 })
 */
 
-//login button on register page
+// login button on register page
 if (document.getElementById('loginpage') != null) {
   const logpgBtn = document.getElementById('loginpage')
   logpgBtn.addEventListener('click', function () {
@@ -143,9 +139,9 @@ if (document.querySelector('#yourTimeline-json') != null) {
 }
 
 if (document.querySelector('#user1-json') != null) {
-const timeline = mockroblog.getUserTimeline('ProfAvery')
+  const timeline = mockroblog.getUserTimeline('ProfAvery')
 
-  const display = document.querySelector()
+  const display = document.querySelector('#user1-json')
 
   timeline.forEach(timelinePost => {
     display.innerHTML += (
@@ -172,6 +168,15 @@ const timeline = mockroblog.getUserTimeline('ProfAvery')
         </section>
         `
     )
+  })
+  const followButton = document.getElementsByClassName('btn')
+  Array.from(followButton).forEach((followButton) => {
+    let lastButton = 'Unfollow'
+    followButton.addEventListener('click', function () {
+      const temporayBtn = followButton.innerHTML
+      followButton.innerHTML = lastButton
+      lastButton = temporayBtn
+    })
   })
 }
 
@@ -205,6 +210,15 @@ if (document.querySelector('#user2-json') != null) {
         </section>
         `
     )
+  })
+  const followButton = document.getElementsByClassName('btn')
+  Array.from(followButton).forEach((followButton) => {
+    let lastButton = 'Unfollow'
+    followButton.addEventListener('click', function () {
+      const temporayBtn = followButton.innerHTML
+      followButton.innerHTML = lastButton
+      lastButton = temporayBtn
+    })
   })
 }
 
@@ -266,7 +280,7 @@ if (document.querySelector('#homeTimeline-json') != null) {
             <div class="-my-8 divide-y-2 divide-gray-100">
               <div class="py-8 flex flex-wrap md:flex-nowrap">
                 <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                  <span class="font-semibold title-font text-gray-700">${mockroblog.returnUsername(timelinePost.user_id)}</span>
+                  <span class="font-semibold title-font text-gray-700"><a href="${timelinePost.user_id}.html">${mockroblog.returnUsername(timelinePost.user_id)}</span>
                   <span class="mt-1 text-gray-500 text-sm">${timelinePost.timestamp}</span>
                 </div>
                 <div class="md:flex-grow">
@@ -309,7 +323,7 @@ if (document.querySelector('#publicTimeline-json') != null) {
             <div class="-my-8 divide-y-2 divide-gray-100">
               <div class="py-8 flex flex-wrap md:flex-nowrap">
                 <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                  <span class="font-semibold title-font text-black-900">${mockroblog.returnUsername(timelinePost.user_id)}</span>
+                  <span class="font-semibold title-font text-black-900"><a href="${timelinePost.user_id}.html">${mockroblog.returnUsername(timelinePost.user_id)}</span>
                   <span class="mt-1 text-gray-500 text-sm">${timelinePost.timestamp}</span>
                 </div>
                 <div class="md:flex-grow">
