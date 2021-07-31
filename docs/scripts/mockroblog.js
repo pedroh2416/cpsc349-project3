@@ -11,7 +11,7 @@ export function createUser (username, email, password) {
   }
 }
 
-export function returnUsername(userId) {
+export function returnUsername (userId) {
   if (userId === 1) {
     return 'ProfAvery'
   } else if (userId === 2) {
